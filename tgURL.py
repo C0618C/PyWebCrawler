@@ -1,1 +1,0 @@
-target_url= ['https://blog.scrapinghub.com']
