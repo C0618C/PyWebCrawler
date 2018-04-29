@@ -1,9 +1,14 @@
 import scrapy
+import re
 import _tgURL
+
+# scrapy runspider anime.py -o o/idx.json
 
 class AnimeSpider(scrapy.Spider):
     name = 'animespider'
     start_urls = _tgURL.target_url  #target_url= ['https://blog.scrapinghub.com']
+    allowed_domains =[re.search('//([^/]*)/+',start_urls[0]).group(1)]
+    _scheme = re.search('^https?:',start_urls[0]).group()
 
     def parse(self, response):
         for tt in response.selector.css('.k_list-lb'):  # 列表规则
@@ -14,3 +19,10 @@ class AnimeSpider(scrapy.Spider):
             item['date']=tt.css('#k_list-lb-2-f::text').extract()[0][3:]  # 更新时间
             yield item
         
+        # 翻页
+        __next=response.selector.css('.k_pape').xpath('a[text()="下一页"]/@href').extract()
+        if len(__next)>0:
+            next_url = self._scheme+"//"+self.allowed_domains[0]+__next[0]
+            self.log('Going to next page:\t '+next_url)
+            yield scrapy.Request(next_url, callback=self.parse)
+
