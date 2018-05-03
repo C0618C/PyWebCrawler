@@ -1,5 +1,6 @@
 # 项目名称
-proj_name ="nlp_cartoon"
+import time
+proj_name ="nlp_adult_"+time.strftime("%Y%m%d", time.localtime())
 
 # 是否继续翻页爬
 isDeep= True #False

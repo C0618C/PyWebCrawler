@@ -3,6 +3,7 @@
 '''
     跟网站结构相关的分析全抽离在这里，当网站改版时可以单独更新，而不影响主线策略
 '''
+import time
 import scrapy
 from scrapy.contrib.loader import ItemLoader
 
@@ -51,7 +52,11 @@ def Loader_content(response):
     if len(l.get_xpath('//*[@class="pagenow"]/text()'))>=1:
         sub_title += '-'+l.get_xpath('//*[@class="pagenow"]/text()')[0]
     l.add_value('title',l.get_xpath('//*[@class="b_list-1a-1c"]/text()')[0]+sub_title)
-    l.add_xpath('content','//*[@class="content-img"]/p/img/@src')
-    l.add_xpath('image_urls','//*[@class="content-img"]/p/img/@src')
+    l.add_value('src_url',response.url)
+    content_img = l.get_xpath('//*[@class="content-img"]/p/img/@src')
+    l.add_value('content',content_img)
+    l.add_xpath('image_urls',content_img)
+    print('正下载图片：',content_img)
+    time.sleep(len(content_img))
     return l.load_item()
 

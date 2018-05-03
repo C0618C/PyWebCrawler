@@ -1,4 +1,4 @@
-# -*- coding: utf-8 -*-
+import os
 import re
 import scrapy
 from scrapy.contrib.pipeline.images import ImagesPipeline
@@ -25,6 +25,8 @@ class AnimeSpider(scrapy.Spider):
         ,'ITEM_PIPELINES' : {'scrapy.contrib.pipeline.images.ImagesPipeline': 1}     #照片下载管道
         ,'IMAGES_STORE' : 'o/'+name+'/image'              #照片保存位置
     }
+    if os.path.exists('o/'+name) == False:
+        os.mkdir('o/'+name)
 
     def parse(self, response):
         print(":::::::::::::::\t正在获取第 %d 页数据\t:::::::::::::::::::" % (self._curPage))
