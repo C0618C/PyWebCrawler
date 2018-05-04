@@ -55,7 +55,7 @@ def Loader_content(response):
     l.add_value('src_url',response.url)
     content_img = l.get_xpath('//*[@class="content-img"]/p/img/@src')
     l.add_value('content',content_img)
-    l.add_xpath('image_urls',content_img)
+    l.add_value('image_urls',content_img)
     print('正下载图片：',content_img)
     time.sleep(len(content_img))
     return l.load_item()
