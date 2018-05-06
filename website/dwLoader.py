@@ -66,6 +66,6 @@ def Loader_content(response):
     l.add_value('content',content_img)
     l.add_value('image_urls',conver_img+content_img)
     print('正下载图片：',conver_img+content_img)
-    time.sleep(len(conver_img+content_img))
+    #time.sleep(len(conver_img+content_img))
     return l.load_item()
 
