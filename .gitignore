@@ -4,3 +4,4 @@ o/*
 */url_setting.py
 *.pyc
 *__pycache__*
+tool/SortData/test/*
